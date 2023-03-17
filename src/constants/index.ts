@@ -63,5 +63,9 @@ export const VSCODE_BUILTIN_ENVIRONMENTS: Record<VSCodeEdition, {
     [VSCodeEdition.CODESERVER]: {
         dataDirectoryName: "code-server",
         extensionsDirectoryName: ".config/code-server"
+    },
+    [VSCodeEdition.THEIA_BLUEPRINT]: {
+        dataDirectoryName: ".theia-blueprint",
+        extensionsDirectoryName: ".theia-blueprint"
     }
 };

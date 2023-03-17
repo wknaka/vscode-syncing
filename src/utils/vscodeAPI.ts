@@ -107,6 +107,9 @@ export function getVSCodeEdition()
         case "code-server":
             return VSCodeEdition.CODESERVER;
 
+        case "Theia Blueprint":
+            return VSCodeEdition.THEIA_BLUEPRINT;
+
         default:
             throw new Error(localize("error.env.unknown.vscode"));
     }

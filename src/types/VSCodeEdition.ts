@@ -37,5 +37,10 @@ export enum VSCodeEdition
     /**
      * The OSS VSCode server provided by [Coder](https://coder.com), which is running on a remote or self-hosted server.
      */
-    CODESERVER
+    CODESERVER,
+
+    /**
+     * Theia Blueprint
+     */
+    THEIA_BLUEPRINT
 }

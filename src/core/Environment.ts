@@ -1,9 +1,9 @@
 import * as os from "os";
 import * as path from "path";
 
-import { getVSCodeBuiltinEnvironment } from "../utils/vscodeAPI";
+import { getVSCodeBuiltinEnvironment, getVSCodeEdition } from "../utils/vscodeAPI";
 import { localize } from "../i18n";
-import { Platform } from "../types";
+import { Platform, VSCodeEdition } from "../types";
 import type { IExtension } from "../types";
 
 /**
@@ -169,11 +169,21 @@ export class Environment
 
             case Platform.LINUX:
             default:
-                return path.join(
-                    os.homedir(),
-                    ".config",
-                    dataDirectoryName
-                );
+                if (getVSCodeEdition() === VSCodeEdition.THEIA_BLUEPRINT)
+                {
+                    return path.join(
+                        os.homedir(),
+                        dataDirectoryName
+                    );
+                }
+                else
+                {
+                    return path.join(
+                        os.homedir(),
+                        ".config",
+                        dataDirectoryName
+                    );
+                }
         }
     }
 

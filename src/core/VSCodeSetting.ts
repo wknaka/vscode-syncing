@@ -18,10 +18,10 @@ import { diff } from "../utils/diffPatch";
 import { Environment } from "./Environment";
 import { excludeSettings, mergeSettings, parse } from "../utils/jsonc";
 import { Extension } from "./Extension";
-import { getVSCodeSetting } from "../utils/vscodeAPI";
+import { getVSCodeSetting, getVSCodeEdition } from "../utils/vscodeAPI";
 import { localize } from "../i18n";
 import { readLastModified, writeLastModified } from "../utils/file";
-import { SettingType } from "../types";
+import { SettingType, VSCodeEdition } from "../types";
 import * as Toast from "./Toast";
 import type { IExtension, ISetting, ISyncedItem, IGist, IGistFile } from "../types";
 
@@ -113,6 +113,12 @@ export class VSCodeSetting
                 remoteFilename = localFilename;
                 if (settingType === SettingType.Keybindings)
                 {
+                    if (getVSCodeEdition() === VSCodeEdition.THEIA_BLUEPRINT)
+                    {
+                        localFilename = "keymaps.json";
+                        remoteFilename = localFilename;
+                    }
+
                     // Separate the keybindings.
                     const separateKeybindings = getVSCodeSetting<boolean>(
                         CONFIGURATION_KEY,
@@ -120,7 +126,14 @@ export class VSCodeSetting
                     );
                     if (separateKeybindings && this._env.isMac)
                     {
-                        remoteFilename = `${settingType}${VSCodeSetting._MAC_SUFFIX}.json`;
+                        if (getVSCodeEdition() === VSCodeEdition.THEIA_BLUEPRINT)
+                        {
+                            remoteFilename = `keymaps${VSCodeSetting._MAC_SUFFIX}.json`;
+                        }
+                        else
+                        {
+                            remoteFilename = `${settingType}${VSCodeSetting._MAC_SUFFIX}.json`;
+                        }
                     }
                 }
 
